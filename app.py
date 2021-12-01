@@ -27,18 +27,21 @@ def app(data:list, aim:int) -> None:
         da = data[i]
         target = aim-int(da['h_in'])
         couple, point = find_target(target, point=i, data=data)
-        check.append(bool(couple))
 
         if point is False:
             i += 1
+            check.append(False)
+        
+        elif i == point:
+            i = point + 1
+            check.append(False)
+
         else:
-            
             player = ' '.join([da['first_name'], da['last_name']])
-            if i == point:
-                i = point + 1
-            else:
-                print('\t'.join([player, couple]))
-                i = point
+            print('\t'.join([player, couple]))
+            i = point
+            check.append(bool(couple))
+
     else:
         if any(check) is False:
             print('No matches found')
